@@ -8,42 +8,7 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.0.0-beta1/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/vue/3.0.0-beta.14/vue.global.prod.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/5.0.0-beta1/js/bootstrap.bundle.min.js"></script>
-    <style>
-        .card {
-            border: 1px solid #e5e5e5;
-        }
-
-        body {
-            background-color: #f7dab8;
-        }
-
-        .alert-primary {
-            background-color: #392c18;
-            color: white;
-        }
-        
-        .alert-heading{
-            color: white;
-        }
-
-        hr {
-            border: 1px solid #ff5cad;
-        }
-
-        nav {
-            border-bottom: 1px solid #ff5cad;
-        }
-
-        #tooltip {
-            display: none;
-            position: absolute;
-            border: 1px solid #ccc;
-            background-color: #fff;
-            padding: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -77,22 +42,22 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">职业</th>
-                                        <th scope="col">对应宠物</th>
+                                        <th scope="col">宠物</th>
                                         <th scope="col">地区</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="(value, key) in job2map" :key="key">
+                                    <tr v-for="item in job2map" :key="item">
                                         <td>
                                             <div>
-                                                <img :src="'images/jobs/' + key + '.png'" alt="Job Image"
-                                                    style="width: 45px; height: 45px;" :job="key"
-                                                    @mouseover="showTooltipForImg" @mouseout="hideTooltip">
+                                                <img :src="'images/jobs/' + item.job + '.png'" alt="Job Image"
+                                                    style="width: 45px; height: 45px;" :job="item.job"
+                                                    @mouseover="showTooltip" @mouseout="hideTooltip">
                                             </div>
                                         </td>
-                                        <td><small>{{ value.徽章 }}</small></td>
+                                        <td><small>{{ item.pet }}</small></td>
                                         <td>
-                                            <div class="badge m-1 " v-for="region in value.地区" :key="region"
+                                            <div class="badge m-1 " v-for="region in item.regions" :key="region"
                                                 :region="region" @click="highlightRegion(region)"
                                                 :class="{ 'bg-primary': highlightedRegion === region, 'bg-secondary': highlightedRegion != region }">
                                                 {{ region }}
@@ -111,15 +76,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="(jobs, region) in map2job" :key="region">
-                                        <td>{{ region }}</td>
+                                    <tr v-for="item in map2job" :key="map">
+                                        <td>{{ item.map }}</td>
                                         <td>
-                                            <div class="badge m-1 " v-for="job in jobs" :key="job" :job="job"
-                                                @click="highlightJob(job)" @mouseover="showTooltipForDiv"
-                                                @mouseout="hideTooltip"
-                                                :class="{ 'bg-primary': highlightedJob === job, 'bg-secondary': highlightedJob != job }">
-                                                {{ job }}
-                                            </div>
+                                            <img v-for="job in item.jobs" :key="job" :src="'images/jobs/' + job + '.png'" alt="Job Image"
+                                            style="width: 45px; height: 45px;" :job="job"
+                                            @mouseover="showTooltip" @mouseout="hideTooltip">
+                                            {{ job }}
                                         </td>
                                     </tr>
                                 </tbody>
@@ -129,208 +92,12 @@
                 </div>
             </div>
             <div id="tooltip" style="display: none; position: absolute;">
-                <img id="imager" src="images/weapons/2Di6NUdk02k6huCFBD4g4yDLWA.jpg" alt="Job Image"
+                <img id="imager" src="" alt="Job Image"
                     style="width: 30vw; height: auto;">
             </div>
         </div>
     </div>
-    <script>
-        var app = Vue.createApp({
-            data() {
-                let datas = {
-                    message: 'Hello Vue!',
-
-                    highlightedRegion: '',
-
-                    job2map: {
-                        "战士": {
-                            "徽章": "妖怪传奇徽章：地缚猫",
-                            "地区": [
-                                "黑衣森林中央林区",
-                                "拉诺西亚低地",
-                                "中萨纳兰"
-                            ]
-                        },
-                        "白魔法师": {
-                            "徽章": "妖怪传奇徽章：小狛",
-                            "地区": [
-                                "黑衣森林东部林区",
-                                "西萨纳兰",
-                                "东萨纳兰"
-                            ]
-                        },
-                        "吟游诗人": {
-                            "徽章": "妖怪传奇徽章：维斯帕",
-                            "地区": [
-                                "黑衣森林南部林区",
-                                "中拉诺西亚",
-                                "西萨纳兰"
-                            ]
-                        },
-                        "骑士": {
-                            "徽章": "妖怪传奇徽章：武士猫",
-                            "地区": [
-                                "拉诺西亚低地",
-                                "中萨纳兰",
-                                "黑衣森林东部林区"
-                            ]
-                        },
-                        "暗黑骑士": {
-                            "徽章": "妖怪传奇徽章：浮游猫",
-                            "地区": [
-                                "西拉诺西亚",
-                                "黑衣森林南部林区",
-                                "东萨纳兰"
-                            ]
-                        },
-                        "机工士": {
-                            "徽章": "妖怪传奇徽章：机器猫F型",
-                            "地区": [
-                                "拉诺西亚高地",
-                                "南萨纳兰",
-                                "黑衣森林北部林区"
-                            ]
-                        },
-                        "武僧": {
-                            "徽章": "妖怪传奇徽章：USA蹦",
-                            "地区": [
-                                "拉诺西亚外地",
-                                "中拉诺西亚",
-                                "西萨纳兰"
-                            ]
-                        },
-                        "绝枪战士": {
-                            "徽章": "妖怪传奇徽章：阎魔",
-                            "地区": [
-                                "基拉巴尼亚边区",
-                                "红玉海",
-                                "延夏",
-                                "基拉巴尼亚山区",
-                                "基拉巴尼亚湖区",
-                                "太阳神草原"
-                            ]
-                        },
-                        "武士": {
-                            "徽章": "妖怪传奇徽章：滑头鬼",
-                            "地区": [
-                                "库尔札斯西部高地",
-                                "龙堡参天高地",
-                                "龙堡内陆低地",
-                                "翻云雾海",
-                                "阿巴拉提亚云海",
-                                "魔大陆阿济兹拉"
-                            ]
-                        },
-                        "赤魔法师": {
-                            "徽章": "妖怪传奇徽章：蛇王凯拉",
-                            "地区": [
-                                "库尔札斯西部高地",
-                                "龙堡参天高地",
-                                "龙堡内陆低地",
-                                "翻云雾海",
-                                "阿巴拉提亚云海",
-                                "魔大陆阿济兹拉"
-                            ]
-                        },
-                        "舞者": {
-                            "徽章": "妖怪传奇徽章：百鬼公主",
-                            "地区": [
-                                "基拉巴尼亚边区",
-                                "红玉海",
-                                "延夏",
-                                "基拉巴尼亚山区",
-                                "基拉巴尼亚湖区",
-                                "太阳神草原"
-                            ]
-                        }
-                    },
-
-                    highlightedJob: '',
-
-                    map2job: {
-                        "黑衣森林中央林区": ["战士", "吟游诗人"],
-                        "拉诺西亚低地": ["战士", "骑士"],
-                        "中萨纳兰": ["战士", "骑士"],
-                        "黑衣森林东部林区": ["白魔法师", "骑士"],
-                        "西萨纳兰": ["白魔法师", "吟游诗人"],
-                        "东萨纳兰": ["白魔法师", "暗黑骑士"],
-                        "黑衣森林南部林区": ["吟游诗人", "暗黑骑士"],
-                        "中拉诺西亚": ["吟游诗人", "武僧"],
-                        "西拉诺西亚": ["暗黑骑士"],
-                        "黑衣森林北部林区": ["机工士"],
-                        "拉诺西亚高地": ["机工士"],
-                        "南萨纳兰": ["机工士"],
-                        "拉诺西亚外地": ["武僧"],
-                        "基拉巴尼亚边区": ["绝枪战士", "舞者"],
-                        "红玉海": ["绝枪战士", "舞者"],
-                        "延夏": ["绝枪战士", "舞者"],
-                        "基拉巴尼亚山区": ["绝枪战士", "舞者"],
-                        "基拉巴尼亚湖区": ["绝枪战士", "舞者"],
-                        "太阳神草原": ["绝枪战士", "舞者"],
-                        "库尔札斯西部高地": ["武士", "赤魔法师"],
-                        "龙堡参天高地": ["武士", "赤魔法师"],
-                        "龙堡内陆低地": ["武士", "赤魔法师"],
-                        "翻云雾海": ["武士", "赤魔法师"],
-                        "阿巴拉提亚云海": ["武士", "赤魔法师"],
-                        "魔大陆阿济兹拉": ["武士", "赤魔法师"]
-                    }
-                }
-                // 字母排序
-                datas.job2map = Object.keys(datas.job2map).sort().reduce((acc, key) => {
-                    acc[key] = datas.job2map[key];
-                    return acc;
-                }, {});
-                datas.map2job = Object.keys(datas.map2job).sort().reduce((acc, key) => {
-                    acc[key] = datas.map2job[key];
-                    return acc;
-                }, {});
-                return datas;
-            },
-            methods: {
-                highlightRegion(region) {
-                    this.highlightedRegion = region;
-                },
-                highlightJob(job) {
-                    this.highlightedJob = job;
-                },
-
-                showTooltipForDiv(event) {
-                    const tooltip = document.getElementById('tooltip');
-
-                    // 设置tooltip中imager的src
-                    const job = event.target.getAttribute('job');
-
-                    const imager = document.getElementById('imager');
-                    imager.src = `images/weapons/${job}.jpg`;
-
-                    tooltip.style.display = 'block';
-                    tooltip.style.left = event.pageX + 'px';
-                    tooltip.style.top = event.pageY + 'px';
-                },
-                showTooltipForImg(event) {
-                    const tooltip = document.getElementById('tooltip');
-
-                    // 
-                    const job = event.target.getAttribute('job');
-                    console.log(event);
-                    console.log(event.target);
-
-                    const imager = document.getElementById('imager');
-                    imager.src = `images/weapons/${job}.jpg`;
-
-                    tooltip.style.display = 'block';
-                    tooltip.style.left = event.pageX + 'px';
-                    tooltip.style.top = event.pageY + 'px';
-                },
-                hideTooltip() {
-                    const tooltip = document.getElementById('tooltip');
-                    tooltip.style.display = 'none';
-                },
-
-            }
-        })
-        app.mount('#app')
-    </script>
+    <script src="script.js"></script>
 </body>
 
 </html>

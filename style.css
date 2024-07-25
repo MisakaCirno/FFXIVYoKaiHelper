@@ -1,0 +1,34 @@
+.card {
+    border: 1px solid #e5e5e5;
+}
+
+body {
+    background-color: #f7dab8;
+}
+
+.alert-primary {
+    background-color: #392c18;
+    color: white;
+}
+
+.alert-heading{
+    color: white;
+}
+
+hr {
+    border: 1px solid #ff5cad;
+}
+
+nav {
+    border-bottom: 1px solid #ff5cad;
+}
+
+#tooltip {
+    display: none;
+    position: absolute;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
