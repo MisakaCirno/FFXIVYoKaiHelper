@@ -5,9 +5,9 @@
     <title>FF14妖表联动工具站</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.0.0-beta1/css/bootstrap.min.css">
-    <script src="https://cdn.staticfile.org/vue/3.0.0-beta.14/vue.global.prod.js"></script>
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/5.0.0-beta1/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="module/bootstrap-5.3.3/css/bootstrap.min.css">
+    <script src="module/bootstrap-5.3.3/js/bootstrap.bundle.min.js"></script>
+    <script src="module/vue.global.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -50,7 +50,7 @@
                                     <tr v-for="item in job2map" :key="item">
                                         <td>
                                             <div>
-                                                <img :src="'images/jobs/' + item.job + '.png'" alt="Job Image"
+                                                <img :src="'images/job_icon/' + item.job + '.png'" alt="Job Image"
                                                     style="width: 45px; height: 45px;" :job="item.job"
                                                     @mouseover="showTooltip" @mouseout="hideTooltip">
                                             </div>
@@ -79,7 +79,7 @@
                                     <tr v-for="item in map2job" :key="map">
                                         <td>{{ item.map }}</td>
                                         <td>
-                                            <img v-for="job in item.jobs" :key="job" :src="'images/jobs/' + job + '.png'" alt="Job Image"
+                                            <img v-for="job in item.jobs" :key="job" :src="'images/job_icon/' + job + '.png'" alt="Job Image"
                                             style="width: 45px; height: 45px;" :job="job"
                                             @mouseover="showTooltip" @mouseout="hideTooltip">
                                             {{ job }}
