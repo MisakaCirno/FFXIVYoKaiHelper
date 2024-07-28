@@ -20,10 +20,17 @@
                         <h4 class="alert-heading">FF14妖表联动工具站</h4>
                         <p class="mb-0">引用资料：</p>
                         <ul>
-                            <li><a href="https://actff1.web.sdo.com/project/20240722yokai/"
-                                    target="_blank">官网妖表联动活动页</a></li>
+                            <li><a href="https://actff1.web.sdo.com/project/20240722yokai/" target="_blank">官网
+                                    妖表联动活动页</a></li>
                             <li><a href="https://ff14.huijiwiki.com/wiki/%E5%A6%96%E6%80%AA%E6%89%8B%E8%A1%A8"
                                     target="_blank">FF14 灰机wiki 妖表联动</a></li>
+
+                        </ul>
+                        <p class="mb-0">反馈：</p>
+                        <ul>
+                            <li><a href="https://bbs.nga.cn/read.php?tid=41002182" target="_blank">NGA</a></li>
+                            <li><a href="https://tieba.baidu.com/p/9104273005" target="_blank">贴吧</a></li>
+                            <li><a href="https://github.com/MisakaCirno/FFXIVYoKaiHelper" target="_blank">Github仓库</a></li>
                         </ul>
                     </div>
                     <!-- 定义tab item -->
@@ -119,8 +126,12 @@
                                 </thead>
                                 <tbody>
                                     <tr v-for="regionToJobData in regionToJobDataList" :key="regionToJobData">
-                                        <td>{{ regionToJobData.primaryRegion }}</td>
-                                        <td>{{ regionToJobData.subRegion }}</td>
+                                        <td>
+                                            <p class="text-center mb-0">{{ regionToJobData.primaryRegion }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-center mb-0">{{ regionToJobData.subRegion }}</p>
+                                        </td>
                                         <td>
                                             <!-- 横向布局内部的div -->
                                             <div>
@@ -137,7 +148,9 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>暂无</td>
+                                        <td>
+                                            <p class="text-center mb-0"></p>暂无</p>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -147,7 +160,7 @@
             </div>
             <!-- 悬浮窗 -->
             <div id="tooltip" style="display: none; position: absolute;">
-                <img id="imager" src="" alt="Detail Image" style="width: 30vw; height: auto;">
+                <img id="imager" src="" alt="Detail Image" style="width: auto; height: 30vh;">
             </div>
         </div>
     </div>
