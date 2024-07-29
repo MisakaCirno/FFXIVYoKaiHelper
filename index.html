@@ -11,7 +11,7 @@
     <script src="module/vue.global.js"></script>
     <!-- 51.la的统计代码 -->
     <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
-    <script>LA.init({id:"3JAURnqSmTZs7l3k",ck:"3JAURnqSmTZs7l3k"})</script>
+    <script>LA.init({ id: "3JAURnqSmTZs7l3k", ck: "3JAURnqSmTZs7l3k" })</script>
 </head>
 
 <body>
@@ -21,20 +21,25 @@
                 <div class="col-12">
                     <div class="alert alert-primary" role="alert">
                         <h4 class="alert-heading">FF14妖表联动工具站</h4>
-                        <p class="mb-0">引用资料：</p>
-                        <ul>
-                            <li><a href="https://actff1.web.sdo.com/project/20240722yokai/" target="_blank">官网
-                                    妖表联动活动页</a></li>
-                            <li><a href="https://ff14.huijiwiki.com/wiki/%E5%A6%96%E6%80%AA%E6%89%8B%E8%A1%A8"
-                                    target="_blank">FF14 灰机wiki 妖表联动</a></li>
+                        <p class="mb-2">
+                            <span>引用资料及图片素材来源：</span>
+                            <a type="button" class="btn btn-primary mx-1"
+                                href="https://actff1.web.sdo.com/project/20240722yokai/" target="_blank">
+                                官网妖表活动页</a>
+                            <a type="button" class="btn btn-primary mx-1"
+                                href="https://ff14.huijiwiki.com/wiki/%E5%A6%96%E6%80%AA%E6%89%8B%E8%A1%A8"
+                                target="_blank">灰机wiki妖表联动页</a>
+                        </p>
 
-                        </ul>
-                        <p class="mb-0">反馈：</p>
-                        <ul>
-                            <li><a href="https://bbs.nga.cn/read.php?tid=41002182" target="_blank">NGA</a></li>
-                            <li><a href="https://tieba.baidu.com/p/9104273005" target="_blank">贴吧</a></li>
-                            <li><a href="https://github.com/MisakaCirno/FFXIVYoKaiHelper" target="_blank">Github仓库</a></li>
-                        </ul>
+                        <p class="mb-0">
+                            <span>反馈方式：</span>
+                            <a type="button" class="btn btn-success mx-1"
+                                href="https://bbs.nga.cn/read.php?tid=41002182" target="_blank">NGA</a>
+                            <a type="button" class="btn btn-success mx-1" href="https://tieba.baidu.com/p/9104273005"
+                                target="_blank">贴吧</a>
+                            <a type="button" class="btn btn-success mx-1"
+                                href="https://github.com/MisakaCirno/FFXIVYoKaiHelper" target="_blank">Github仓库</a>
+                        </p>
                     </div>
                     <!-- 定义tab item -->
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -61,7 +66,7 @@
                                     <tr>
                                         <th scope="col">职业</th>
                                         <th scope="col">宠物</th>
-                                        <th scope="col" style="min-width: 180px;">武器</th>
+                                        <th scope="col">武器</th>
                                         <th scope="col">地区</th>
                                     </tr>
                                 </thead>
@@ -121,38 +126,47 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">大地区</th>
-                                        <th scope="col">小地区</th>
+                                        <th scope="col">地区</th>
                                         <th scope="col">职业</th>
                                         <th scope="col">其他</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="regionToJobData in regionToJobDataList" :key="regionToJobData">
+                                    <tr v-for="regionData in regionDataList" :key="regionDataList">
                                         <td>
-                                            <p class="text-center mb-0">{{ regionToJobData.primaryRegion }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="text-center mb-0">{{ regionToJobData.subRegion }}</p>
+                                            <div class="d-flex flex-column align-items-center">
+                                                <p class="badge text-bg-primary">{{ regionData.primaryRegion }}</p>
+                                                <p class="badge text-bg-success">{{ regionData.subRegion }}</p>
+                                            </div>
                                         </td>
                                         <td>
                                             <!-- 横向布局内部的div -->
                                             <div>
                                                 <div class="d-flex justify-content-start">
                                                     <div class="d-flex flex-column align-items-center mx-2"
-                                                        v-for="jobData in regionToJobData.jobs">
-                                                        <img :key="jobData.job"
+                                                        v-for="jobData in regionData.jobs">
+                                                        <img :key="jobData.job" :job="jobData.job"
                                                             :src="'images/job_icon/' + jobData.job + '.png'"
                                                             alt="Job Image" style="width: 45px; height: 45px;"
-                                                            :job="jobData.job" @mouseover="showJobDetail"
-                                                            @mouseout="hideJobDetail">
+                                                            @mouseover="showJobDetail" @mouseout="hideJobDetail">
                                                         <p class="text-center mb-0">{{ jobData.job }}</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
-                                            <p class="text-center mb-0"></p>暂无</p>
+                                            <div>
+                                                <div class="d-flex justify-content-start">
+                                                    <div class="d-flex flex-column align-items-center mx-2"
+                                                        v-for="otherData in regionData.others">
+                                                        <img :key="otherData.name" :name="otherData.name"
+                                                            :src="'images/other_icon/' + otherData.folder + '/' + otherData.name + '.png'"
+                                                            alt="Other Image" style="width: 45px; height: 45px;">
+                                                        <p class="text-center mb-0">{{ otherData.name }}</p>
+                                                        <p class="badge text-bg-info mb-0">{{ otherData.type }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>

@@ -47,6 +47,37 @@ const REGION_DATA =
 console.log("REGION_DATA:");
 console.log(REGION_DATA);
 
+//古武、魂武、义武的掉落
+const GU_WU = {
+    "白羊之魂晶": "中拉诺西亚",
+    "双鱼之魂晶": "拉诺西亚低地",
+    "巨蟹之魂晶": "西拉诺西亚",
+    "宝瓶之魂晶": "拉诺西亚高地",
+    "狮子之魂晶": "拉诺西亚外地",
+    "室女之魂晶": "黑衣森林中央林区",
+    "摩羯之魂晶": "黑衣森林东部林区",
+    "人马之魂晶": "黑衣森林北部林区",
+    "双子之魂晶": "西萨纳兰",
+    "天秤之魂晶": "中萨纳兰",
+    "金牛之魂晶": "东萨纳兰",
+    "天蝎之魂晶": "南萨纳兰"
+};
+
+const HUN_WU = {
+    "流光火之水晶": "魔大陆阿济兹拉",
+    "流光风之水晶": "阿巴拉提亚云海",
+    "流光雷之水晶": "翻云雾海",
+    "流光冰之水晶": "库尔札斯西部高地",
+    "流光土之水晶": "龙堡参天高地",
+    "流光水之水晶": "龙堡内陆低地"
+};
+
+const YI_WU = {
+    "烦恼的记忆晶块": ["库尔札斯西部高地", "阿巴拉提亚云海"],
+    "悲伤的记忆晶块": ["龙堡参天高地", "翻云雾海"],
+    "恐惧的记忆晶块": ["龙堡内陆低地", "魔大陆阿济兹拉"]
+};
+
 /**
  * key为子地区名称，value为所属的大地区名称
  */
@@ -95,14 +126,34 @@ let sample =
     "primaryRegion": "拉诺西亚",
     "subRegion": "中拉诺西亚",
     "jobs": []
+    "others":[] 
 };
 */
-
 let regionToJobList = [];
 // 遍历每个大地区
 for (const [region, subregions] of Object.entries(REGION_DATA)) {
     for (const subregion of subregions) {
-        let item = { "primaryRegion": region, "subRegion": subregion, "jobs": mapToJob.get(subregion) };
+        let otherContent = [];
+
+        for (const [key, value] of Object.entries(GU_WU)) {
+            if (value === subregion) {
+                otherContent.push({ name: key, type: "古武", folder: "guwu" });
+            }
+        }
+
+        for (const [key, value] of Object.entries(HUN_WU)) {
+            if (value === subregion) {
+                otherContent.push({ name: key, type: "魂武", folder: "hunwu" });
+            }
+        }
+
+        for (const [key, value] of Object.entries(YI_WU)) {
+            if (value.includes(subregion)) {
+                otherContent.push({ name: key, type: "义武", folder: "yiwu" });
+            }
+        }
+
+        let item = { "primaryRegion": region, "subRegion": subregion, "jobs": mapToJob.get(subregion), "others": otherContent };
         regionToJobList.push(item);
     }
 }
@@ -118,7 +169,7 @@ var app = Vue.createApp({
 
             highlightedJob: '',
 
-            regionToJobDataList: regionToJobList,
+            regionDataList: regionToJobList,
         }
 
         return datas;
