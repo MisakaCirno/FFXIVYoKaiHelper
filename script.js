@@ -170,6 +170,8 @@ var app = Vue.createApp({
             highlightedJob: '',
 
             regionDataList: regionToJobList,
+
+            previewImageURL: '',
         }
 
         return datas;
@@ -200,25 +202,19 @@ var app = Vue.createApp({
             // console.log(event.target);
             let job = event.target.getAttribute('job');
 
-            let tooltipImage = document.getElementById('tooltipImage');
-
             let newSrc = `images/weapon_detail/${job}.jpg`;
-
-            if (tooltipImage.src !== newSrc) {
-                tooltipImage.src = newSrc;
+            if (this.previewImageURL !== newSrc) {
+                this.previewImageURL = newSrc;
             }
 
             tooltip.style.display = 'block';
             tooltip.style.left = event.pageX + 'px';
-            tooltip.style.top = event.pageY + 'px';
+            tooltip.style.top = event.pageY + 50 + 'px';
         },
-        hideJobDetail() {
+        hideJobDetail() {  
+            this.previewImageURL = '';
+
             let tooltip = document.getElementById('tooltip');
-
-            // 清空图片
-            let tooltipImage = document.getElementById('tooltipImage');
-            tooltipImage.src = '';
-
             tooltip.style.display = 'none';
         },
 
@@ -237,15 +233,12 @@ var app = Vue.createApp({
 
             tooltip.style.display = 'block';
             tooltip.style.left = event.pageX + 'px';
-            tooltip.style.top = event.pageY + 'px';
+            tooltip.style.top = event.pageY + 50+ 'px';
         },
         hidePetDetail() {
+            this.previewImageURL = '';
+
             let tooltip = document.getElementById('tooltip');
-
-            // 清空图片
-            let tooltipImage = document.getElementById('tooltipImage');
-            tooltipImage.src = '';
-
             tooltip.style.display = 'none';
         }
     }

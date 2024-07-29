@@ -92,7 +92,8 @@
                                                     <img :src="'images/pet_icon/' + yokaiData.pet + '.png'"
                                                         alt="Pet Image" style="width: 45px; height: 45px;"
                                                         :pet="yokaiData.pet" @mouseover="showPetDetail"
-                                                        @mouseout="hidePetDetail" @click="copyToClipboard('/minion ' + yokaiData.pet)" />
+                                                        @mouseout="hidePetDetail"
+                                                        @click="copyToClipboard('/minion ' + yokaiData.pet)" />
                                                     <p class="text-center mb-0">{{ yokaiData.pet }}</p>
                                                 </div>
                                             </div>
@@ -184,7 +185,7 @@
             </div>
             <!-- 悬浮窗 -->
             <div id="tooltip" style="display: none; position: absolute;">
-                <img id="tooltipImage" src="" alt="Detail Image" style="min-width: 30vh; height: 30vh;">
+                <img id="tooltipImage" :src="previewImageURL" alt="Detail Image" style="min-width: 30vh; height: 30vh;">
             </div>
         </div>
     </div>
