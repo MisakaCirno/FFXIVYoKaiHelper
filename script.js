@@ -179,7 +179,7 @@ var app = Vue.createApp({
             navigator.clipboard.writeText(text).then(
                 () => {
                     // 弹出一个thoast提示
-                    
+                    alert('已复制到剪贴板');
                 }
             ).catch(err => {
                 console.error('无法复制到剪贴板', err);
