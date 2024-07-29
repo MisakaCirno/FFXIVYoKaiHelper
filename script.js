@@ -176,9 +176,12 @@ var app = Vue.createApp({
     },
     methods: {
         copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                alert('已复制到剪贴板: ' + text);
-            }).catch(err => {
+            navigator.clipboard.writeText(text).then(
+                () => {
+                    // 弹出一个thoast提示
+                    
+                }
+            ).catch(err => {
                 console.error('无法复制到剪贴板', err);
             });
         },
@@ -191,48 +194,57 @@ var app = Vue.createApp({
         },
 
         showJobDetail(event) {
-            const tooltip = document.getElementById('tooltip');
+            let tooltip = document.getElementById('tooltip');
 
-            // 设置tooltip中imager的src
+            // 设置tooltip中tooltipImage的src
             // console.log(event.target);
-            const job = event.target.getAttribute('job');
+            let job = event.target.getAttribute('job');
 
-            const imager = document.getElementById('imager');
-            imager.src = `images/weapon_detail/${job}.jpg`;
+            let tooltipImage = document.getElementById('tooltipImage');
+
+            let newSrc = `images/weapon_detail/${job}.jpg`;
+
+            if (tooltipImage.src !== newSrc) {
+                tooltipImage.src = newSrc;
+            }
 
             tooltip.style.display = 'block';
             tooltip.style.left = event.pageX + 'px';
             tooltip.style.top = event.pageY + 'px';
         },
         hideJobDetail() {
-            const tooltip = document.getElementById('tooltip');
+            let tooltip = document.getElementById('tooltip');
 
             // 清空图片
-            const imager = document.getElementById('imager');
-            imager.src = '';
+            let tooltipImage = document.getElementById('tooltipImage');
+            tooltipImage.src = '';
 
             tooltip.style.display = 'none';
         },
 
         showPetDetail(event) {
-            const tooltip = document.getElementById('tooltip');
+            let tooltip = document.getElementById('tooltip');
 
-            // 设置tooltip中imager的src
-            const pet = event.target.getAttribute('pet');
+            // 设置tooltip中tooltipImage的src
+            let pet = event.target.getAttribute('pet');
 
-            const imager = document.getElementById('imager');
-            imager.src = `images/pet_detail/${pet}.jpg`;
+            let tooltipImage = document.getElementById('tooltipImage');
+
+            let newSrc = `images/pet_detail/${pet}.jpg`;
+            if (tooltipImage.src !== newSrc) {
+                tooltipImage.src = newSrc;
+            }
 
             tooltip.style.display = 'block';
             tooltip.style.left = event.pageX + 'px';
             tooltip.style.top = event.pageY + 'px';
         },
         hidePetDetail() {
-            const tooltip = document.getElementById('tooltip');
+            let tooltip = document.getElementById('tooltip');
 
             // 清空图片
-            const imager = document.getElementById('imager');
-            imager.src = '';
+            let tooltipImage = document.getElementById('tooltipImage');
+            tooltipImage.src = '';
 
             tooltip.style.display = 'none';
         }

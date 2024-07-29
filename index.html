@@ -39,7 +39,7 @@
                             <a type="button" class="btn btn-success mx-1"
                                 href="https://github.com/MisakaCirno/FFXIVYoKaiHelper" target="_blank">Github仓库</a>
                         </p>
-
+                        <p class="mb-2">点击宠物图标可以快速复制召唤宠物的宏；点击武器图标则可以快速复制检索道具的宏，便于查询持有情况。</p>
                         <p class="mb-0">注：如果发现列表的内容加载不出来，可能是因为浏览器的缘故，请尝试切换浏览器解决！其他的解决方法正在研究中。</p>
                     </div>
                     <!-- 定义tab item -->
@@ -73,6 +73,7 @@
                                 </thead>
                                 <tbody>
                                     <tr v-for="yokaiData in yokaiDataList" :key="item">
+                                        <!-- 职业 -->
                                         <td>
                                             <div class="d-flex justify-content-center">
                                                 <div class="d-flex flex-column align-items-center">
@@ -84,17 +85,19 @@
                                                 </div>
                                             </div>
                                         </td>
+                                        <!-- 宠物 -->
                                         <td>
                                             <div class="d-flex justify-content-center">
                                                 <div class="d-flex flex-column align-items-center">
                                                     <img :src="'images/pet_icon/' + yokaiData.pet + '.png'"
                                                         alt="Pet Image" style="width: 45px; height: 45px;"
                                                         :pet="yokaiData.pet" @mouseover="showPetDetail"
-                                                        @mouseout="hidePetDetail" />
+                                                        @mouseout="hidePetDetail" @click="copyToClipboard('/minion ' + yokaiData.pet)" />
                                                     <p class="text-center mb-0">{{ yokaiData.pet }}</p>
                                                 </div>
                                             </div>
                                         </td>
+                                        <!-- 武器 -->
                                         <td>
                                             <div>
                                                 <div class="d-flex justify-content-center">
@@ -104,12 +107,13 @@
                                                             alt="Weapon Image" style="width: 45px; height: 45px;"
                                                             :weapon="weapon" :job="yokaiData.job"
                                                             @mouseover="showJobDetail" @mouseout="hideJobDetail"
-                                                            @click="copyToClipboard(weapon)" />
+                                                            @click="copyToClipboard('/isearch ' + weapon)" />
                                                         <p class="text-center mb-0">{{ weapon }}</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </td>
+                                        <!-- 地区 -->
                                         <td>
                                             <button class="btn mx-0 my-0 py-0 rounded-2"
                                                 v-for="region in yokaiData.regions" :key="region" :region="region"
@@ -134,14 +138,15 @@
                                 </thead>
                                 <tbody>
                                     <tr v-for="regionData in regionDataList" :key="regionData">
+                                        <!-- 地区 -->
                                         <td>
                                             <div class="d-flex flex-column align-items-center">
                                                 <p class="badge text-bg-primary">{{ regionData.primaryRegion }}</p>
                                                 <p class="badge text-bg-success">{{ regionData.subRegion }}</p>
                                             </div>
                                         </td>
+                                        <!-- 职业 -->
                                         <td>
-                                            <!-- 横向布局内部的div -->
                                             <div>
                                                 <div class="d-flex justify-content-start">
                                                     <div class="d-flex flex-column align-items-center mx-2"
@@ -155,6 +160,7 @@
                                                 </div>
                                             </div>
                                         </td>
+                                        <!-- 其他 -->
                                         <td>
                                             <div>
                                                 <div class="d-flex justify-content-start">
@@ -178,7 +184,7 @@
             </div>
             <!-- 悬浮窗 -->
             <div id="tooltip" style="display: none; position: absolute;">
-                <img id="imager" src="" alt="Detail Image" style="width: auto; height: 30vh;">
+                <img id="tooltipImage" src="" alt="Detail Image" style="min-width: 30vh; height: 30vh;">
             </div>
         </div>
     </div>
