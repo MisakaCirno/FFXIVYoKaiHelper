@@ -181,7 +181,7 @@ var app = Vue.createApp({
             navigator.clipboard.writeText(text).then(
                 () => {
                     // 弹出一个thoast提示
-                    alert('已复制到剪贴板');
+                    // alert('已复制到剪贴板');
                 }
             ).catch(err => {
                 console.error('无法复制到剪贴板', err);
@@ -211,7 +211,7 @@ var app = Vue.createApp({
             tooltip.style.left = event.pageX + 'px';
             tooltip.style.top = event.pageY + 50 + 'px';
         },
-        hideJobDetail() {  
+        hideJobDetail() {
             this.previewImageURL = '';
 
             let tooltip = document.getElementById('tooltip');
@@ -233,7 +233,7 @@ var app = Vue.createApp({
 
             tooltip.style.display = 'block';
             tooltip.style.left = event.pageX + 'px';
-            tooltip.style.top = event.pageY + 50+ 'px';
+            tooltip.style.top = event.pageY + 50 + 'px';
         },
         hidePetDetail() {
             this.previewImageURL = '';
