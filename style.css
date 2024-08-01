@@ -11,7 +11,7 @@ body {
     color: white;
 }
 
-.alert-heading{
+.alert-heading {
     color: white;
 }
 
@@ -31,14 +31,4 @@ nav {
     padding: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-}
-
-.hightlight {
-    background-color: #ff5cad;
-}
-
-.horizontal-layout {
-    display: flex;
-    justify-content: space-between; /* 可选：调整子元素之间的间距 */
-    align-items: center; /* 可选：垂直居中对齐子元素 */
 }

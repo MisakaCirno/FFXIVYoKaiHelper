@@ -5,10 +5,11 @@
     <title>FF14妖表联动工具站</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.4.34/vue.global.prod.min.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=1.0.0">
     <!-- 51.la的统计代码 -->
     <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
     <script>LA.init({ id: "3JAURnqSmTZs7l3k", ck: "3JAURnqSmTZs7l3k" })</script>
@@ -71,7 +72,7 @@
                         <!-- 第一个tab -->
                         <div class="tab-pane fade show active" id="jobToMapPage" role="tabpanel"
                             aria-labelledby="jobToMapPage-tab">
-                            <table class="table">
+                            <table class="table align-middle">
                                 <thead>
                                     <tr>
                                         <th scope="col">职业</th>
@@ -84,13 +85,18 @@
                                     <tr v-for="yokaiData in yokaiDataList" :key="item">
                                         <!-- 职业 -->
                                         <td>
-                                            <div class="d-flex justify-content-center">
-                                                <div class="d-flex flex-column align-items-center">
-                                                    <img :src="'images/job_icon/' + yokaiData.job + '.png'"
-                                                        alt="Job Image" style="width: 45px; height: 45px;"
-                                                        :job="yokaiData.job" @mouseover="showJobDetail"
-                                                        @mouseout="hideJobDetail" />
-                                                    <p class="text-center mb-0">{{ yokaiData.job }}</p>
+                                            <div class="d-flex justify-content-center" style="flex: 1">
+                                                <div class="d-flex flex-column align-items-center" style="flex: 1">
+                                                    <input type="checkbox" class="btn-check" :id="yokaiData.job"
+                                                        autocomplete="off" :checked="yokaiData.isChecked">
+                                                    <label class="btn btn-outline-success" :for="yokaiData.job"
+                                                        style="width: 100%;">
+                                                        <img :src="'images/job_icon/' + yokaiData.job + '.png'"
+                                                            alt="Job Image" style="width: 45px; height: 45px;"
+                                                            :job="yokaiData.job" @mouseover="showJobDetail"
+                                                            @mouseout="hideJobDetail" />
+                                                        <p class="text-center mb-0" style="white-space: nowrap;">{{ yokaiData.job }}</p>
+                                                    </label>
                                                 </div>
                                             </div>
                                         </td>
@@ -138,10 +144,10 @@
                         </div>
                         <!-- 第二个tab -->
                         <div class="tab-pane fade" id="mapToJobPage" role="tabpanel" aria-labelledby="mapToJobPage-tab">
-                            <table class="table">
+                            <table class="table align-middle">
                                 <thead>
                                     <tr>
-                                        <th scope="col">地区</th>
+                                        <th scope="col" style="width: 12em;">地区</th>
                                         <th scope="col">职业</th>
                                         <th scope="col">其他</th>
                                     </tr>
@@ -150,9 +156,17 @@
                                     <tr v-for="regionData in regionDataList" :key="regionData">
                                         <!-- 地区 -->
                                         <td>
-                                            <div class="d-flex flex-column align-items-center">
-                                                <p class="badge text-bg-primary">{{ regionData.primaryRegion }}</p>
-                                                <p class="badge text-bg-success">{{ regionData.subRegion }}</p>
+                                            <div class="d-flex justify-content-center" style="flex: 1">
+                                                <div class="d-flex flex-column align-items-center" style="flex: 1">
+                                                    <input type="checkbox" class="btn-check" :id="regionData.subRegion"
+                                                        autocomplete="off" :checked="regionData.isChecked">
+                                                    <label class="btn btn-outline-success" :for="regionData.subRegion" style="width: 100%;">
+                                                        <div class="d-flex flex-column align-items-center">
+                                                            <p class="text-center" style="white-space: nowrap;">{{ regionData.primaryRegion }}</p>
+                                                            <p class="text-center mb-0" style="white-space: nowrap;">{{ regionData.subRegion }}</p>
+                                                        </div>
+                                                    </label>
+                                                </div>
                                             </div>
                                         </td>
                                         <!-- 职业 -->
@@ -190,9 +204,18 @@
                             </table>
                         </div>
                         <!-- 更新日志 -->
-                        <div class="tab-pane fade" id="updateLogPage" role="tabpanel" aria-labelledby="updateLogPage-tab">
+                        <div class="tab-pane fade" id="updateLogPage" role="tabpanel"
+                            aria-labelledby="updateLogPage-tab">
                             <div style="background-color: white;">
                                 <div class="p-2">
+                                    <p>2024-08-01</p>
+                                    <ul>
+                                        <li>支持标记职业和地区，但暂时不支持存储到本地，页面关闭后会消失</li>
+                                    </ul>
+                                    <p>2024-08-01</p>
+                                    <ul>
+                                        <li>更新了网站的CDN，现在访问应该更加稳定了</li>
+                                    </ul>
                                     <p>2024-07-31</p>
                                     <ul>
                                         <li>补充义武的两个水晶掉落（感谢NGA：be4t8020指出）</li>
@@ -228,7 +251,7 @@
             </div>
         </div>
     </div>
-    <script src="script.js"></script>
+    <script src="script.js?v=1.0.0"></script>
 </body>
 
 </html>

@@ -26,6 +26,11 @@ const yokaiSourceData = [
     { "job": "占星术士", "pet": "野槌蛇", "weapon": ["幸运天球仪"], "regions": ["南萨纳兰", "黑衣森林北部林区", "拉诺西亚外地"] }
 ];
 
+// 遍历yokaiSourceData，为每个对象添加一个isChecked属性
+for (const data of yokaiSourceData) {
+    data.isChecked = false;
+}
+
 console.log("yokaiSourceData:");
 console.log(yokaiSourceData);
 
@@ -76,8 +81,8 @@ const YI_WU = {
     "烦恼的记忆晶块": ["库尔札斯西部高地", "阿巴拉提亚云海"],
     "悲伤的记忆晶块": ["龙堡参天高地", "翻云雾海"],
     "恐惧的记忆晶块": ["龙堡内陆低地", "魔大陆阿济兹拉"],
-    "不祥的记忆晶块":["基拉巴尼亚边区","基拉巴尼亚山区","基拉巴尼亚湖区"],
-    "忌讳的记忆晶块":["红玉海","延夏","太阳神草原"]
+    "不祥的记忆晶块": ["基拉巴尼亚边区", "基拉巴尼亚山区", "基拉巴尼亚湖区"],
+    "忌讳的记忆晶块": ["红玉海", "延夏", "太阳神草原"]
 };
 
 /**
@@ -131,7 +136,7 @@ let sample =
     "others":[] 
 };
 */
-let regionToJobList = [];
+let regionData = [];
 // 遍历每个大地区
 for (const [region, subregions] of Object.entries(REGION_DATA)) {
     for (const subregion of subregions) {
@@ -155,12 +160,18 @@ for (const [region, subregions] of Object.entries(REGION_DATA)) {
             }
         }
 
-        let item = { "primaryRegion": region, "subRegion": subregion, "jobs": mapToJob.get(subregion), "others": otherContent };
-        regionToJobList.push(item);
+        let item = { 
+            "primaryRegion": region, 
+            "subRegion": subregion, 
+            "jobs": mapToJob.get(subregion), 
+            "others": otherContent,
+            "isChecked": false
+        };
+        regionData.push(item);
     }
 }
 console.log("regionToJobList:");
-console.log(regionToJobList);
+console.log(regionData);
 
 var app = Vue.createApp({
     data() {
@@ -171,7 +182,7 @@ var app = Vue.createApp({
 
             highlightedJob: '',
 
-            regionDataList: regionToJobList,
+            regionDataList: regionData,
 
             previewImageURL: '',
         }
