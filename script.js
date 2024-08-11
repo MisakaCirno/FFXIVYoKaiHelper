@@ -191,14 +191,33 @@ var app = Vue.createApp({
     },
     methods: {
         copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(
-                () => {
-                    // 弹出一个thoast提示
-                    // alert('已复制到剪贴板');
-                }
-            ).catch(err => {
-                console.error('无法复制到剪贴板', err);
-            });
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                // 使用navigator.clipboard.writeText
+                navigator.clipboard.writeText(text).then(function () {
+                    console.log('Text copied to clipboard');
+                }).catch(function (err) {
+                    console.error('Could not copy text by navigator: ', err);
+
+                    // 使用document.execCommand('copy')作为回退
+                    let textArea = document.createElement("textarea");
+                    textArea.value = text;
+                    // 避免在iOS设备上滚动
+                    textArea.style.top = "0";
+                    textArea.style.left = "0";
+                    textArea.style.position = "fixed";
+                    document.body.appendChild(textArea);
+                    textArea.focus();
+                    textArea.select();
+                    try {
+                        let successful = document.execCommand('copy');
+                        let msg = successful ? 'successful' : 'unsuccessful';
+                        console.log('Fallback: Copying text command was ' + msg);
+                    } catch (err) {
+                        console.error('Fallback: Oops, unable to copy', err);
+                    }
+                    document.body.removeChild(textArea);
+                });
+            }
         },
 
         highlightRegion(region) {
