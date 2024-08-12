@@ -1,3 +1,15 @@
+// 从local storage中读取数据
+let selectedData = localStorage.getItem('selectedData');
+/**
+ * 存储了选项的记录
+ */
+let selectedRecord = new Set();
+if (selectedData) {
+    for (const selectedItem of selectedData) {
+        selectedRecord.add(selectedItem);
+    }
+}
+
 /**
  * 联动的原始数据
  */
@@ -28,7 +40,12 @@ const yokaiSourceData = [
 
 // 遍历yokaiSourceData，为每个对象添加一个isChecked属性
 for (const data of yokaiSourceData) {
-    data.isChecked = false;
+    if (selectedRecord.has(data.job)) {
+        data.isChecked = true;
+    }
+    else {
+        data.isChecked = false;
+    }
 }
 
 console.log("yokaiSourceData:");
@@ -160,12 +177,17 @@ for (const [region, subregions] of Object.entries(REGION_DATA)) {
             }
         }
 
-        let item = { 
-            "primaryRegion": region, 
-            "subRegion": subregion, 
-            "jobs": mapToJob.get(subregion), 
+        let isChecked = false;
+        if (selectedRecord.has(subregion)) {
+            isChecked = true;
+        }
+
+        let item = {
+            "primaryRegion": region,
+            "subRegion": subregion,
+            "jobs": mapToJob.get(subregion),
             "others": otherContent,
-            "isChecked": false
+            "isChecked": isChecked
         };
         regionData.push(item);
     }
@@ -188,6 +210,46 @@ var app = Vue.createApp({
         }
 
         return datas;
+    },
+    watch: {
+        yokaiDataList: {
+            handler: function (newValue, oldValue) {
+                let newSelectedData = [];
+
+                for (const data of this.yokaiDataList) {
+                    if (data.isChecked) {
+                        newSelectedData.push(data.job);
+                    }
+                }
+                for (const data of this.regionDataList) {
+                    if (data.isChecked) {
+                        newSelectedData.push(data.subRegion);
+                    }
+                }
+
+                localStorage.setItem('selectedData', JSON.stringify(newSelectedData));
+            },
+            deep: true
+        },
+        regionDataList: {
+            handler: function (newValue, oldValue) {
+                let newSelectedData = [];
+
+                for (const data of this.yokaiDataList) {
+                    if (data.isChecked) {
+                        newSelectedData.push(data.job);
+                    }
+                }
+                for (const data of this.regionDataList) {
+                    if (data.isChecked) {
+                        newSelectedData.push(data.subRegion);
+                    }
+                }
+
+                localStorage.setItem('selectedData', JSON.stringify(newSelectedData));
+            },
+            deep: true
+        }
     },
     methods: {
         copyToClipboard(text) {
@@ -272,6 +334,21 @@ var app = Vue.createApp({
 
             let tooltip = document.getElementById('tooltip');
             tooltip.style.display = 'none';
+        },
+
+        saveToLocalStorage(selectedItem) {
+            // 保存选中的数据
+            selectedRecord.add(selectedItem);
+            // 保存状态到local storage
+            localStorage.setItem('checkboxes', JSON.stringify(this.checkboxes));
+        },
+        clearLocalStorage() {
+            localStorage.clear();
+            location.reload();
+        },
+        printData() {
+            console.log(this.yokaiDataList);
+            console.log(this.regionDataList);
         }
     }
 })
