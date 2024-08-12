@@ -1,13 +1,16 @@
-// 从local storage中读取数据
-let selectedData = localStorage.getItem('selectedData');
 /**
- * 存储了选项的记录
+ * 存储选择项的数据
  */
-let selectedRecord = new Set();
-if (selectedData) {
-    for (const selectedItem of selectedData) {
-        selectedRecord.add(selectedItem);
+let selectedRecord  = new Set();
+
+let selectedDatas = JSON.parse(localStorage.getItem('selectedData'));
+if (selectedDatas){
+    for (let i = 0; i < selectedDatas.length; i++){
+        selectedRecord.add(selectedDatas[i]);
     }
+}
+else{
+    console.log("No selected data in local storage.");
 }
 
 /**
