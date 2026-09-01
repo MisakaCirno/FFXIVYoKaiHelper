@@ -1,0 +1,280 @@
+.workbench {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  min-height: 660px;
+  overflow: hidden;
+  border: 1px solid var(--border-strong);
+  border-radius: 22px;
+  background: rgba(17, 24, 39, 0.88);
+  box-shadow: var(--shadow);
+}
+
+.detail-panel__topline {
+  margin: 0 0 5px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.map-stage {
+  position: relative;
+  width: 100%;
+  min-height: 550px;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  border-radius: 15px;
+  background: #05080d;
+}
+
+.yokai-map {
+  aspect-ratio: 1;
+  min-height: 0;
+  isolation: isolate;
+  background: #02050a;
+}
+
+.yokai-map .leaflet-control-attribution {
+  border-radius: 7px 0 0 0;
+  background: rgba(4, 8, 14, 0.76);
+  color: #8390a4;
+  backdrop-filter: blur(8px);
+}
+
+.yokai-map .leaflet-control-attribution a { color: #b9c7da; }
+.yokai-map .leaflet-bar { border: 1px solid rgba(148, 163, 184, 0.28); box-shadow: none; }
+.yokai-map .leaflet-bar a {
+  border-color: rgba(148, 163, 184, 0.2);
+  background: rgba(10, 17, 29, 0.9);
+  color: var(--text);
+}
+.yokai-map .leaflet-bar a:hover { background: var(--surface-3); }
+
+.map-place-bubble-host { background: transparent; border: 0; }
+
+.map-place-bubble {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  align-content: start;
+}
+
+.map-place-label {
+  position: relative;
+  display: grid;
+  width: 100%;
+  height: 34px;
+  place-items: center;
+  padding: 5px 9px;
+  border: 1px solid rgba(215, 230, 251, 0.52);
+  border-radius: 9px;
+  background: rgba(8, 17, 31, 0.7);
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.4), inset 0 0 12px rgba(65, 139, 223, 0.09);
+  color: #fff;
+  backdrop-filter: blur(7px);
+  transition: border-color 140ms ease, background 140ms ease, box-shadow 140ms ease;
+}
+
+.map-place-label::after {
+  position: absolute;
+  inset: 3px;
+  border: 1px solid rgba(91, 167, 255, 0.15);
+  border-radius: 6px;
+  content: '';
+  pointer-events: none;
+}
+
+.map-place-label__name {
+  position: relative;
+  z-index: 1;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #fff9e9;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.25;
+  white-space: nowrap;
+  text-shadow: 0 2px 6px #000;
+}
+
+.map-place-label:hover {
+  border-color: rgba(245, 185, 76, 0.72);
+  background: rgba(15, 28, 47, 0.82);
+}
+
+.map-place-label__name:hover { color: var(--accent-strong); }
+.map-place-label__name.is-static { cursor: default; }
+.map-place-label__name.is-static:hover { color: #fff9e9; }
+
+.map-place-label.is-active {
+  border-color: var(--accent-strong);
+  background: rgba(38, 31, 18, 0.84);
+  box-shadow: 0 0 0 3px rgba(245, 185, 76, 0.18), 0 6px 18px rgba(0, 0, 0, 0.45);
+}
+
+.map-place-bubble.has-details .map-place-label {
+  border-radius: 9px 9px 0 0;
+}
+
+.map-place-bubble.has-details .map-place-label::after {
+  border-radius: 6px 6px 0 0;
+}
+
+.map-place-details {
+  display: grid;
+  min-width: 100%;
+  justify-items: center;
+  gap: 5px;
+  padding: 6px 8px;
+  border: 1px solid rgba(148, 163, 184, 0.34);
+  border-top: 0;
+  border-radius: 0 0 9px 9px;
+  background: rgba(5, 12, 23, 0.8);
+  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.44), inset 0 0 16px rgba(65, 139, 223, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+.map-place-details__jobs {
+  display: grid;
+  grid-template-columns: repeat(var(--job-columns, 5), 24px);
+  justify-content: center;
+  gap: 4px;
+}
+
+.map-place-details__jobs.is-inline { display: flex; flex-wrap: nowrap; }
+
+.map-job-button {
+  position: relative;
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  outline: 2px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  transition: transform 140ms ease, filter 140ms ease, outline-color 140ms ease;
+}
+
+.map-job-button:hover { z-index: 3; transform: translateY(-2px) scale(1.12); filter: brightness(1.16); }
+.map-job-button:focus-visible,
+.map-job-button.is-active { outline-color: var(--accent-strong); outline-offset: 2px; }
+.map-job-button img { display: block; width: 24px; height: 24px; object-fit: contain; }
+.map-job-button.is-complete img { filter: grayscale(0.84) brightness(0.72); opacity: 0.78; }
+.map-job-button.is-complete::after {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  display: grid;
+  width: 13px;
+  height: 13px;
+  place-items: center;
+  border: 1px solid #d6fff0;
+  border-radius: 50%;
+  background: #21845d;
+  color: #fff;
+  content: '✓';
+  font-size: 8px;
+  font-weight: 900;
+}
+
+.map-place-details__relic-summary,
+.map-place-details__relics {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+}
+
+.relic-summary-chip {
+  padding: 2px 5px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 8px;
+  font-weight: 800;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.relic-summary-chip.is-guwu { color: #f4b45d; }
+.relic-summary-chip.is-hunwu { color: #69c9ff; }
+.relic-summary-chip.is-yiwu { color: #d29bff; }
+
+.map-relic-drop {
+  position: relative;
+  display: block;
+  width: 25px;
+  height: 25px;
+  border: 1px solid currentColor;
+  border-radius: 7px;
+  background: rgba(2, 6, 12, 0.88);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.36);
+}
+
+.map-relic-drop.is-guwu { color: #f4b45d; }
+.map-relic-drop.is-hunwu { color: #69c9ff; }
+.map-relic-drop.is-yiwu { color: #d29bff; }
+.map-relic-drop img { display: block; width: 23px; height: 23px; border-radius: 6px; object-fit: contain; }
+
+.map-relic-drop b {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  display: grid;
+  width: 13px;
+  height: 13px;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  background: #0a101b;
+  color: inherit;
+  font-size: 7px;
+  line-height: 1;
+}
+
+.map-drop-legend {
+  position: absolute;
+  z-index: 410;
+  bottom: 16px;
+  left: 50%;
+  display: flex;
+  gap: 5px;
+  padding: 6px;
+  transform: translateX(-50%);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 10px;
+  background: rgba(4, 9, 16, 0.78);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(10px);
+}
+
+.map-drop-legend > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #b9c5d6;
+  font-size: 9px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.map-drop-legend i {
+  display: grid;
+  width: 17px;
+  height: 17px;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 5px;
+  background: rgba(2, 6, 12, 0.7);
+  font-size: 8px;
+  font-style: normal;
+}
+
+.map-drop-legend .is-guwu i { color: #f4b45d; }
+.map-drop-legend .is-hunwu i { color: #69c9ff; }
+.map-drop-legend .is-yiwu i { color: #d29bff; }
